@@ -40,6 +40,10 @@ Event *SearchEvent(EventList *this, char *name)
         }
         this->head = phead; 
     }
+    else
+    {
+        printf("NULL");
+    }
 }
 
 void AddEvent(EventList *this, Event *event)
@@ -115,12 +119,14 @@ void RemoveEvent(EventList *this, char *name)
         else 
         {
             Event *phead = this->head;
+            Event  *pn = this->head;
             u_int8_t bool = 0;
             //printf("entra\n");
             while (phead->next != NULL)
             {
                 if(strcmp(name, phead->next->eventName) == 0)
                 {
+                    pn = phead->next;
                     phead->next = phead->next->next;
                     bool = 1;
                     break;
@@ -129,7 +135,7 @@ void RemoveEvent(EventList *this, char *name)
             }
             if (bool == 1)
             {
-                DestroyEvent(phead->next->next);
+                DestroyEvent(pn);
             }         
         }        
     }
