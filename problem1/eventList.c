@@ -47,7 +47,7 @@ Event *SearchEvent(EventList *this, char *name)
 
 void AddEvent(EventList *this, Event *event)
 {
-    Event *phead = this->head;
+
 
     if(this->isEmpty == 1)
     {
@@ -57,19 +57,22 @@ void AddEvent(EventList *this, Event *event)
     }
     else
     {
-        while(this->head != NULL)
+        Event *phead = this->head;
+        
+        while(phead != NULL)
         {
             //printf("nametec: %s\n", event->eventName);
             //printf("namehead: %s\n", this->head->eventName);
-            if(strcmp(event->eventName, this->head->eventName) == 0)
+            if(strcmp(event->eventName, phead->eventName) == 0)
             {
                 return;
             }    
-            this->head = this->head->next;
+            phead = phead->next;
         }
+        // Insertar el evento en la lista
+
         this->last->next = event;
         this->last = event;  
-        this->head = phead;                 
     }
     
 }
