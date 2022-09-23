@@ -45,19 +45,15 @@ void RemoveEvent(EventList *this, char *name)
     //printf("nametec: %c\n", *name);
     //printf("namehead: %c\n", *this->head->eventName);
 
-    if (this->isEmpty == 1)
-    {
-        //printf("empty\n");
-    }
-    else
-    {
-            if(*name == *(this->head->eventName)) //esto SIEMPRE va a entrar, estamos comparando cosas que no son
+    if (this->isEmpty == 0)
+    {       
+        if(strcmp(name, this->head->eventName) == 0) //esto SIEMPRE va a entrar, estamos comparando cosas que no son
         {
             //printf("borr1\n");
             this->head = this->head->next;
             DestroyEvent(phead);
         }
-        else if (*name == *(this->last->eventName))
+        else if (strcmp(name, this->last->eventName) == 0)
         {
             //printf("ultev\n");
             while (this->head->next != NULL)
@@ -79,7 +75,7 @@ void RemoveEvent(EventList *this, char *name)
             //printf("entra\n");
             while (this->head->next != NULL)
             {
-                if(*name == *(this->head->next->eventName))
+                if(strcmp(name, this->head->next->eventName) == 0)
                 {
                     this->head->next = this->head->next->next;
                     break;
@@ -90,8 +86,8 @@ void RemoveEvent(EventList *this, char *name)
 
             this->head = phead; 
         }
+        
     }
-    
 
 }
 
