@@ -49,9 +49,20 @@ void RemoveEvent(EventList *this, char *name)
     {       
         if(strcmp(name, this->head->eventName) == 0) //esto SIEMPRE va a entrar, estamos comparando cosas que no son
         {
-            //printf("borr1\n");
-            this->head = this->head->next;
-            DestroyEvent(phead);
+            if(this->head->next == NULL)
+            {
+                this->head = NULL;
+                this->last = NULL;
+                this->isEmpty = 1;
+                DestroyEvent(this->head);
+            }
+            else
+            {
+                //printf("borr1\n");
+                this->head = this->head->next;
+                DestroyEvent(phead);
+            }
+            
         }
         else if (strcmp(name, this->last->eventName) == 0)
         {
