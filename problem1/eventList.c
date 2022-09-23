@@ -44,45 +44,54 @@ void RemoveEvent(EventList *this, char *name)
     Event *phead = this->head;
     //printf("nametec: %c\n", *name);
     //printf("namehead: %c\n", *this->head->eventName);
-    if(*name == *this->head->eventName)
-    {
-        //printf("borr1\n");
-        this->head = this->head->next;
-        DestroyEvent(phead);
-    }
-    else if (*name == *this->last->eventName)
-    {
-        //printf("ultev\n");
-        while (this->head->next != NULL)
-        {
-            if(this->head->next->next == NULL)
-            {
-                this->last = this->head->next;
-                this->head->next = NULL;
-                break;
-            }
-            this->head = this->head->next;
-        }
-        DestroyEvent(this->last);
 
-        this->head = phead; 
-    }
-    else 
+    if (this->isEmpty == 1)
     {
-        //printf("entra\n");
-        while (this->head->next != NULL)
-        {
-            if(*name == *this->head->next->eventName)
-            {
-                this->head->next = this->head->next->next;
-                break;
-            }
-            this->head = this->head->next;
-        }
-        DestroyEvent(this->head->next->next);
-
-        this->head = phead; 
+        //printf("empty\n");
     }
+    else
+    {
+            if(*name == *(this->head->eventName)) //esto SIEMPRE va a entrar, estamos comparando cosas que no son
+        {
+            //printf("borr1\n");
+            this->head = this->head->next;
+            DestroyEvent(phead);
+        }
+        else if (*name == *(this->last->eventName))
+        {
+            //printf("ultev\n");
+            while (this->head->next != NULL)
+            {
+                if(this->head->next->next == NULL)
+                {
+                    this->last = this->head->next;
+                    this->head->next = NULL;
+                    break;
+                }
+                this->head = this->head->next;
+            }
+            DestroyEvent(this->last);
+
+            this->head = phead; 
+        }
+        else 
+        {
+            //printf("entra\n");
+            while (this->head->next != NULL)
+            {
+                if(*name == *(this->head->next->eventName))
+                {
+                    this->head->next = this->head->next->next;
+                    break;
+                }
+                this->head = this->head->next;
+            }
+            DestroyEvent(this->head->next->next);
+
+            this->head = phead; 
+        }
+    }
+    
 
 }
 
