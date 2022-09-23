@@ -24,31 +24,26 @@ Event *SearchEvent(EventList *this, char *name)
     u_int8_t bool = 0;
     if(this->isEmpty==0)
     {
-        while (this->head->next != NULL)
+        while (phead->next != NULL)
         {
-            if(strcmp(name, this->head->eventName) == 0)
+            if(strcmp(name, phead->eventName) == 0)
             {
-                printf("%s",this->head->eventName);
+                printf("%s",phead->eventName);
                 bool=1;
                 break;
             }
-            this->head = this->head->next;
+            phead = phead->next;
         }
         if(bool==0)
         {
             printf("NULL");
         }
         this->head = phead; 
-
     }
-    
-
 }
 
 void AddEvent(EventList *this, Event *event)
 {
-    Event *phead = this->head;
-
     if(this->isEmpty == 1)
     {
         this->isEmpty = 0;
@@ -57,33 +52,36 @@ void AddEvent(EventList *this, Event *event)
     }
     else
     {
-        while(this->head != NULL)
+        Event *phead = this->head;
+        
+        while(phead != NULL)
         {
             //printf("nametec: %s\n", event->eventName);
             //printf("namehead: %s\n", this->head->eventName);
-            if(strcmp(event->eventName, this->head->eventName) == 0)
+            if(strcmp(event->eventName, phead->eventName) == 0)
             {
                 return;
             }    
-            this->head = this->head->next;
+            phead = phead->next;
         }
+        // Insertar el evento en la lista
+
         this->last->next = event;
         this->last = event;  
-        this->head = phead;                 
     }
     
 }
 
 void RemoveEvent(EventList *this, char *name)
 {
-    Event *phead = this->head;
     //printf("nametec: %c\n", *name);
     //printf("namehead: %c\n", *this->head->eventName);
 
     if (this->isEmpty == 0)
     {       
-        if(strcmp(name, this->head->eventName) == 0) //esto SIEMPRE va a entrar, estamos comparando cosas que no son
+        if(strcmp(name, this->head->eventName) == 0)
         {
+            Event *phead = this->head;
             if(this->head->next == NULL)
             {
                 this->head = NULL;
@@ -93,7 +91,6 @@ void RemoveEvent(EventList *this, char *name)
             }
             else
             {
-                //printf("borr1\n");
                 this->head = this->head->next;
                 DestroyEvent(phead);
             }
@@ -101,40 +98,41 @@ void RemoveEvent(EventList *this, char *name)
         }
         else if (strcmp(name, this->last->eventName) == 0)
         {
+            Event *phead = this->head;
             //printf("ultev\n");
-            while (this->head->next != NULL)
+            while (phead->next != NULL)
             {
-                if(this->head->next->next == NULL)
+                if(phead->next->next == NULL)
                 {
-                    this->last = this->head->next;
-                    this->head->next = NULL;
+                    this->last = phead->next;
+                    phead->next = NULL;
                     break;
                 }
-                this->head = this->head->next;
+                phead = phead->next;
             }
             DestroyEvent(this->last);
-
-            this->head = phead; 
         }
         else 
         {
+            Event *phead = this->head;
+            u_int8_t bool = 0;
             //printf("entra\n");
-            while (this->head->next != NULL)
+            while (phead->next != NULL)
             {
-                if(strcmp(name, this->head->next->eventName) == 0)
+                if(strcmp(name, phead->next->eventName) == 0)
                 {
-                    this->head->next = this->head->next->next;
+                    phead->next = phead->next->next;
+                    bool = 1;
                     break;
                 }
-                this->head = this->head->next;
+                phead = phead->next;
             }
-            DestroyEvent(this->head->next->next);
-
-            this->head = phead; 
-        }
-        
+            if (bool == 1)
+            {
+                DestroyEvent(phead->next->next);
+            }         
+        }        
     }
-
 }
 
 void ListEvents(EventList *this)
@@ -148,11 +146,10 @@ void ListEvents(EventList *this)
     else 
     {
         printf("%s\n",this->head->eventName);
-        while (this->head->next != NULL)
+        while (phead->next != NULL)
         {
-            this->head = this->head->next;
-            printf("%s\n",this->head->eventName); 
+            phead = phead->next;
+            printf("%s\n",phead->eventName); 
         }
-        this->head = phead;
     }
 }
