@@ -1,0 +1,1 @@
+../tester/run-tests.sh: line 27:  2346 Segmentation fault      ./main < tests/6.in

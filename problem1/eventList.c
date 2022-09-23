@@ -15,7 +15,7 @@ EventList *CreateEventList(void)
 
 void DestroyEventList(EventList *this)
 {
-
+    free(this); //pipe me obligó
 }
 
 Event *SearchEvent(EventList *this, char *name)
@@ -41,26 +41,47 @@ void AddEvent(EventList *this, Event *event)
 
 void RemoveEvent(EventList *this, char *name)
 {
-    if(this->head->eventName == name)
+    Event *phead = this->head;
+    printf("nametec: %c\n", *name);
+    printf("namehead: %c\n", *this->head->eventName);
+    if(*name == *this->head->eventName)
     {
+        printf("borr1\n");
         this->head = this->head->next;
-        DestroyEvent(this->head);
+        DestroyEvent(phead);
     }
-    else if (this->last->eventName == name)
+    else if (*name == *this->last->eventName)
     {
+        //printf("ultev\n");
         while (this->head->next != NULL)
         {
             if(this->head->next->next == NULL)
             {
                 this->last = this->head->next;
                 this->head->next = NULL;
+                break;
             }
             this->head = this->head->next;
         }
         DestroyEvent(this->last);
-    }
-    {
 
+        this->head = phead; 
+    }
+    else 
+    {
+        printf("entra\n");
+        while (this->head->next != NULL)
+        {
+            if(*name == *this->head->next->eventName)
+            {
+                this->head->next = this->head->next->next;
+                break;
+            }
+            this->head = this->head->next;
+        }
+        DestroyEvent(this->head->next->next);
+
+        this->head = phead; 
     }
 
 }
@@ -75,7 +96,6 @@ void ListEvents(EventList *this)
     }
     else 
     {
-
         printf("%s\n",this->head->eventName);
         while (this->head->next != NULL)
         {
