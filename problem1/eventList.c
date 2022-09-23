@@ -42,11 +42,11 @@ void AddEvent(EventList *this, Event *event)
 void RemoveEvent(EventList *this, char *name)
 {
     Event *phead = this->head;
-    printf("nametec: %c\n", *name);
-    printf("namehead: %c\n", *this->head->eventName);
+    //printf("nametec: %c\n", *name);
+    //printf("namehead: %c\n", *this->head->eventName);
     if(*name == *this->head->eventName)
     {
-        printf("borr1\n");
+        //printf("borr1\n");
         this->head = this->head->next;
         DestroyEvent(phead);
     }
@@ -69,7 +69,7 @@ void RemoveEvent(EventList *this, char *name)
     }
     else 
     {
-        printf("entra\n");
+        //printf("entra\n");
         while (this->head->next != NULL)
         {
             if(*name == *this->head->next->eventName)
