@@ -15,35 +15,26 @@ EventList *CreateEventList(void)
 
 void DestroyEventList(EventList *this)
 {
-    free(this); //pipe me obligó
+    free(this);
 }
 
 Event *SearchEvent(EventList *this, char *name)
 {
     Event *phead = this->head;
-    u_int8_t bool = 0;
-    if(this->isEmpty==0)
+    if(this->isEmpty == 0)
     {
-        while (phead->next != NULL)
+        while (phead != NULL)
         {
             if(strcmp(name, phead->eventName) == 0)
             {
-                printf("%s",phead->eventName);
-                bool=1;
-                break;
+                return phead;
             }
             phead = phead->next;
         }
-        if(bool==0)
-        {
-            printf("NULL");
-        }
-        this->head = phead; 
     }
-    else
-    {
-        printf("NULL");
-    }
+    phead = NULL;
+    return phead;
+
 }
 
 void AddEvent(EventList *this, Event *event)
@@ -60,8 +51,6 @@ void AddEvent(EventList *this, Event *event)
         
         while(phead != NULL)
         {
-            //printf("nametec: %s\n", event->eventName);
-            //printf("namehead: %s\n", this->head->eventName);
             if(strcmp(event->eventName, phead->eventName) == 0)
             {
                 return;
@@ -69,7 +58,6 @@ void AddEvent(EventList *this, Event *event)
             phead = phead->next;
         }
         // Insertar el evento en la lista
-
         this->last->next = event;
         this->last = event;  
     }
