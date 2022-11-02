@@ -81,6 +81,7 @@ int main(void)
             commandBuf[strlen(commandBuf) - 1] = 0;
 
             Event *event = SearchEvent(eventList, commandBuf);
+            //printf("%s",event->eventName); //debugging
             if(event != NULL){
                 Event *eventNew = CreateEvent(commandBuf);
                 AddEvent(eventList, eventNew);
